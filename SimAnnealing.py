@@ -62,7 +62,7 @@ def main():
     datos=TSPGenerator.generador(10)
     results=[]
     t0=10
-    for i in range(0,10)
+    for i in range(0,10):
     
         distances=[]
         bestDist=math.inf
