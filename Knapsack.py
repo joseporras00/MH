@@ -17,18 +17,18 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     #Seleccionar padres mediante torneo tamaño k    
     datos1=[]
     datos2=[]
-    for i in k:
-        datos1.append(random.rand(0,len(poblacion)-1))
-        datos2.append(random.rand(0,len(poblacion)-1))
+    for i in range(k):
+        datos1.append(random.randint(0,len(poblacion)-1))
+        datos2.append(random.randint(0,len(poblacion)-1))
     
     temp1=0
     for n in datos1:
-        if poblacion[n]>temp1:
+        if poblacion[n][1]>temp1:
             temp1=n
 
     temp2=0
     for n in datos2:
-        if poblacion[n]>temp2:
+        if poblacion[n][1]>temp2:
             temp2=n
     
     #Cruzar padres con probabilidad cProb
@@ -44,17 +44,19 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     if random.randint(0,1) <= mProb:
         aux1=poblacion[temp1]
         aux2=poblacion[temp2]
-        p1=random.rand(0,l1-1)
-        p2=random.rand(0,l2-1)
-        if aux1[p]==0:
-            aux1[p]=1
+        l1=len(aux1)
+        l2=len(aux2)
+        p1=random.randint(0,l1-1)
+        p2=random.randint(0,l2-1)
+        if aux1[p1]==0:
+            aux1[p1]=1
         else:
-            aux1[p]=0
+            aux1[p1]=0
 
-        if aux2[p]==0:
-            aux2[p]=1
+        if aux2[p2]==0:
+            aux2[p2]=1
         else:
-            aux2[p]=0
+            aux2[p2]=0
 
         poblacion[temp1]=aux1
         poblacion[temp2]=aux2    
@@ -68,7 +70,7 @@ def main():
     precios = [ 340, 210, 87, 533, 112 ]
     pesoMax = 100 #Peso máximo que se puede poner en la mochila
     nSoluciones = 25 #Tamaño de la poblacion
-    maxGeneraciones = 1 #Numero de generaciones
+    maxGeneraciones = 2 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
     cProb = 0.5 #Probabilidad de cruce
     mProb = 0.1 #Probabilidad de mutacion
@@ -96,7 +98,7 @@ def main():
         poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
 
     with open("P2.csv", "w") as file:
-        file.write(",".join(["Poblacion"])+"\n")
+        file.write(",".join(["Gen 1"])+"\n")
         for res in poblacion:
             file.write(",".join(str(e) for e in res)+"\n")
     it=1
@@ -107,7 +109,7 @@ def main():
         for solucion in nSoluciones:
             poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
             with open("P2.csv", "a") as file:
-                file.write(",".join(["Poblacion"])+"\n")
+                file.write(",".join(["Next Gen"])+"\n")
                 for res in poblacion:
                     file.write(",".join(str(e) for e in res)+"\n")
         it+=1
