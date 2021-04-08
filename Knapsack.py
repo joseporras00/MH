@@ -27,7 +27,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
             temp1=n
 
     temp2=0
-        for n in datos2:
+    for n in datos2:
         if poblacion[n]>temp2:
             temp2=n
     
@@ -72,6 +72,7 @@ def main():
     k = 3 #Tamaño torneo selector de padres
     cProb = 0.5 #Probabilidad de cruce
     mProb = 0.1 #Probabilidad de mutacion
+    results=[]
 
     l=len(pesos)
     ##Creamos n soluciones aleatorias que sean válidas
@@ -94,6 +95,10 @@ def main():
             s[i] = 1
         poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
 
+    with open("P2.csv", "w") as file:
+        file.write(",".join(["Poblacion"])+"\n")
+        for res in poblacion:
+            file.write(",".join(str(e) for e in res)+"\n")
     it=1
     while it < maxGeneraciones:
         nSoluciones = aplicarOperadoresGeneticos(poblacion,k,cProb,mProb)
@@ -101,7 +106,15 @@ def main():
         poblacion = []
         for solucion in nSoluciones:
             poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
+            with open("P2.csv", "a") as file:
+                file.write(",".join(["Poblacion"])+"\n")
+                for res in poblacion:
+                    file.write(",".join(str(e) for e in res)+"\n")
         it+=1
+
+        results.append(poblacion)
+        
+    
 
 if __name__ == "__main__":
     main()
