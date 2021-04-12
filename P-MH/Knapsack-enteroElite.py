@@ -78,7 +78,7 @@ def aplicarOperadoresGeneticos(elite,poblacion, k, cProb, mProb):
     return poblacion,elite #Devolver la nueva poblacion (sin evaluar)
 
 def main():
-    elite=0
+    elite=[]
     pesos = [ 34, 45, 14, 76, 32 ]
     precios = [ 340, 210, 87, 533, 112 ]
     pesoMax = 110 #Peso máximo que se puede poner en la mochila
