@@ -32,22 +32,25 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
             temp2=n
     
     #Cruzar padres con probabilidad cProb
-    if random.randint(0,1) <= cProb:
-        aux1=poblacion[temp1]
-        aux2=poblacion[temp2]
+    if random.randint(0,100) <= cProb:
+        aux1=poblacion[temp1][0]
+        aux2=poblacion[temp2][0]
         l1=len(aux1)
-        l2=len(aux2)
-        poblacion[temp1]=aux1[0:l1/2]+aux2[l1/2:l2]
-        poblacion[temp2]=aux2[0:l2/2]+aux1[l2/2:l1]
+        threshold=random.randint(1,l1-1)
+        t1=aux1[threshold: ]
+        t2=aux2[threshold: ]
+        poblacion[temp1][0]=aux1[:threshold]
+        poblacion[temp2][0]=aux2[:threshold]
+        poblacion[temp1][0].extend(t2)
+        poblacion[temp2][0].extend(t1)
 
     #Mutar padres con probabilidad mProb
-    if random.randint(0,1) <= mProb:
+    if random.randint(0,100) <= mProb:
         aux1=poblacion[temp1]
         aux2=poblacion[temp2]
         l1=len(aux1)
-        l2=len(aux2)
         p1=random.randint(0,l1-1)
-        p2=random.randint(0,l2-1)
+        p2=random.randint(0,l1-1)
         if aux1[p1]==0:
             aux1[p1]=1
         else:
@@ -58,8 +61,8 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
         else:
             aux2[p2]=0
 
-        poblacion[temp1]=aux1
-        poblacion[temp2]=aux2    
+        poblacion[temp1][0]=aux1
+        poblacion[temp2][0]=aux2    
         
 
 
@@ -72,9 +75,8 @@ def main():
     nSoluciones = 25 #Tamaño de la poblacion
     maxGeneraciones = 2 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
-    cProb = 0.5 #Probabilidad de cruce
-    mProb = 0.1 #Probabilidad de mutacion
-    results=[]
+    cProb = 50 #Probabilidad de cruce
+    mProb = 10 #Probabilidad de mutacion
 
     l=len(pesos)
     ##Creamos n soluciones aleatorias que sean válidas
@@ -108,13 +110,12 @@ def main():
         poblacion = []
         for solucion in nSoluciones:
             poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
-            with open("P2.csv", "a") as file:
+            with open("P2int.csv", "a") as file:
                 file.write(",".join(["Next Gen"])+"\n")
                 for res in poblacion:
                     file.write(",".join(str(e) for e in res)+"\n")
         it+=1
 
-        results.append(poblacion)
         
     
 
