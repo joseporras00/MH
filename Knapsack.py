@@ -33,21 +33,24 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
     
     #Cruzar padres con probabilidad cProb
     if random.randint(0,1) <= cProb:
-        aux1=poblacion[temp1]
-        aux2=poblacion[temp2]
+        aux1=poblacion[temp1][0]
+        aux2=poblacion[temp2][0]
         l1=len(aux1)
-        l2=len(aux2)
-        poblacion[temp1]=aux1[0:l1/2]+aux2[l1/2:l2]
-        poblacion[temp2]=aux2[0:l2/2]+aux1[l2/2:l1]
+        threshold=random.randint(1,l1-1)
+        t1=aux1[threshold: ]
+        t2=aux2[threshold: ]
+        poblacion[temp1][0]=aux1[:threshold]
+        poblacion[temp2][0]=aux2[:threshold]
+        poblacion[temp1][0].extend(t2)
+        poblacion[temp2][0].extend(t1)
 
     #Mutar padres con probabilidad mProb
     if random.randint(0,1) <= mProb:
-        aux1=poblacion[temp1]
-        aux2=poblacion[temp2]
+        aux1=poblacion[temp1][0]
+        aux2=poblacion[temp2][0]
         l1=len(aux1)
-        l2=len(aux2)
         p1=random.randint(0,l1-1)
-        p2=random.randint(0,l2-1)
+        p2=random.randint(0,l1-1)
         if aux1[p1]==0:
             aux1[p1]=1
         else:
@@ -58,8 +61,8 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
         else:
             aux2[p2]=0
 
-        poblacion[temp1]=aux1
-        poblacion[temp2]=aux2    
+        poblacion[temp1][0]=aux1
+        poblacion[temp2][0]=aux2    
         
 
 
@@ -108,7 +111,7 @@ def main():
         poblacion = []
         for solucion in nSoluciones:
             poblacion.append([solucion[0],evaluarSolucion(solucion[0],precios,pesos,pesoMax)])
-            with open("P2.csv", "a") as file:
+        with open("P2.csv", "a") as file:
                 file.write(",".join(["Next Gen"])+"\n")
                 for res in poblacion:
                     file.write(",".join(str(e) for e in res)+"\n")
