@@ -12,7 +12,7 @@ def evaluarSolucion(solucion, precios, pesos, pesoMax):
     else:
         return precio
 
-def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
+def aplicarOperadoresGeneticos(elite,poblacion, k, cProb, mProb):
 
     #elite
     minimo=999999
