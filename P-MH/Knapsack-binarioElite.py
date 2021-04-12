@@ -75,9 +75,10 @@ def aplicarOperadoresGeneticos(elite,poblacion, k, cProb, mProb):
         poblacion[temp1][0]=aux1
         poblacion[temp2][0]=aux2
 
-    max=0
+    maximo=0
     for i in range(len(poblacion)):
-        if max<poblacion[i][1]:
+        if maximo<poblacion[i][1]:
+            maximo=poblacion[i][1]
             elite=poblacion[i]
 
     return poblacion,elite #Devolver la nueva poblacion (sin evaluar) y elite
@@ -87,8 +88,8 @@ def main():
     pesos = [ 34, 45, 14, 76, 32 ]
     precios = [ 340, 210, 87, 533, 112 ]
     pesoMax = 110 #Peso máximo que se puede poner en la mochila
-    nSoluciones = 50 #Tamaño de la poblacion
-    maxGeneraciones = 20 #Numero de generaciones
+    nSoluciones = 15 #Tamaño de la poblacion
+    maxGeneraciones = 4 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
     cProb = 0 #Probabilidad de cruce
     mProb = 0 #Probabilidad de mutacion
@@ -118,6 +119,7 @@ def main():
     max=0
     for i in range(len(poblacion)):
         if max<poblacion[i][1]:
+            max=poblacion[i][1]
             elite=poblacion[i]
     
     with open("BinElite.csv", "w") as file:

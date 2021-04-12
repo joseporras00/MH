@@ -69,9 +69,10 @@ def aplicarOperadoresGeneticos(elite,poblacion, k, cProb, mProb):
         poblacion[temp1][0]=aux1
         poblacion[temp2][0]=aux2    
 
-    max=0
+    maximo=0
     for i in range(len(poblacion)):
-        if max<poblacion[i][1]:
+        if maximo<poblacion[i][1]:
+            maximo=poblacion[i][1]
             elite=poblacion[i]
 
     return poblacion,elite #Devolver la nueva poblacion (sin evaluar)
@@ -109,9 +110,10 @@ def main():
 
         poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
 
-    max=0
+    maximo=0
     for i in range(len(poblacion)):
-        if max<poblacion[i][1]:
+        if maximo<poblacion[i][1]:
+            maximo=poblacion[i][1]
             elite=poblacion[i]
 
     with open("IntElite.csv", "w") as file:
