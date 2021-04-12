@@ -32,7 +32,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
             temp2=n
     
     #Cruzar padres con probabilidad cProb
-    if random.randint(0,1) <= cProb:
+    if random.randint(0,100) <= cProb:
         aux1=poblacion[temp1][0]
         aux2=poblacion[temp2][0]
         l1=len(aux1)
@@ -45,7 +45,7 @@ def aplicarOperadoresGeneticos(poblacion, k, cProb, mProb):
         poblacion[temp2][0].extend(t1)
 
     #Mutar padres con probabilidad mProb
-    if random.randint(0,1) <= mProb:
+    if random.randint(0,100) <= mProb:
         aux1=poblacion[temp1][0]
         aux2=poblacion[temp2][0]
         l1=len(aux1)
@@ -73,10 +73,10 @@ def main():
     precios = [ 340, 210, 87, 533, 112 ]
     pesoMax = 100 #Peso máximo que se puede poner en la mochila
     nSoluciones = 25 #Tamaño de la poblacion
-    maxGeneraciones = 2 #Numero de generaciones
+    maxGeneraciones = 3 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
-    cProb = 0.5 #Probabilidad de cruce
-    mProb = 0.1 #Probabilidad de mutacion
+    cProb = 50 #Probabilidad de cruce
+    mProb = 10 #Probabilidad de mutacion
     results=[]
 
     l=len(pesos)
@@ -117,7 +117,6 @@ def main():
                     file.write(",".join(str(e) for e in res)+"\n")
         it+=1
 
-        results.append(poblacion)
         
     
 

@@ -84,19 +84,22 @@ def main():
     for i in range(nSoluciones):
         objetos = list(range(l))
         solucion = []
+        cantidades=[]
         peso = 0
         while peso < pesoMax:
             objeto = objetos[random.randint(0, len(objetos) - 1)]
-            peso += pesos[objeto]
+            cantidad=random.randint(1,5)
+            peso += pesos[objeto]*cantidad
             if peso <= pesoMax:
                 solucion.append(objeto)
+                cantidades.append(cantidad)
                 objetos.remove(objeto)
 
         s = []
         for i in range(l):
             s.append(0)
         for i in solucion:
-            s[i] = random.randint(0, 5)
+            s[i] = cantidades[i]
         poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
 
     with open("P2int.csv", "w") as file:
