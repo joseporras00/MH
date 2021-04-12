@@ -95,7 +95,7 @@ def main():
     for i in range(nSoluciones):
         s = []
         for i in range(l):
-            s.append(random.randint(0,5))
+            s.append(random.randint(0,3))
 
         poblacion.append([s,evaluarSolucion(s,precios,pesos,pesoMax)])
 

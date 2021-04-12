@@ -78,12 +78,12 @@ def aplicarOperadoresGeneticos(elite,poblacion, k, cProb, mProb):
     return poblacion,elite #Devolver la nueva poblacion (sin evaluar)
 
 def main():
-    elite=0
+    elite=[]
     pesos = [ 34, 45, 14, 76, 32 ]
     precios = [ 340, 210, 87, 533, 112 ]
     pesoMax = 110 #Peso máximo que se puede poner en la mochila
-    nSoluciones = 50 #Tamaño de la poblacion
-    maxGeneraciones = 20 #Numero de generaciones
+    nSoluciones = 5 #Tamaño de la poblacion
+    maxGeneraciones = 25 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
     cProb = 20 #Probabilidad de cruce
     mProb = 20 #Probabilidad de mutacion
