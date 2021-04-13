@@ -69,23 +69,23 @@ def aplicarOperadoresGeneticos(elite,poblacion, k, cProb, mProb):
         poblacion[temp1][0]=aux1
         poblacion[temp2][0]=aux2    
 
-    maximo=0
+    maximo=elite[1]
     for i in range(len(poblacion)):
         if maximo<poblacion[i][1]:
             maximo=poblacion[i][1]
             elite=poblacion[i]
 
-    return poblacion,elite #Devolver la nueva poblacion (sin evaluar)
+    return poblacion, elite #Devolver la nueva poblacion (sin evaluar)
 
 def main():
     elite=[]
     pesos = [ 34, 45, 14, 76, 32 ]
     precios = [ 340, 210, 87, 533, 112 ]
-    pesoMax = 110 #Peso máximo que se puede poner en la mochila
-    nSoluciones = 5 #Tamaño de la poblacion
+    pesoMax = 300 #Peso máximo que se puede poner en la mochila
+    nSoluciones = 20 #Tamaño de la poblacion
     maxGeneraciones = 25 #Numero de generaciones
     k = 3 #Tamaño torneo selector de padres
-    cProb = 20 #Probabilidad de cruce
+    cProb = 60 #Probabilidad de cruce
     mProb = 20 #Probabilidad de mutacion
     results=[]
 
@@ -122,7 +122,7 @@ def main():
             file.write(",".join(str(e) for e in res)+"\n")
     it=1
     while it < maxGeneraciones:
-        nSoluciones,elite = aplicarOperadoresGeneticos(elite,poblacion,k,cProb,mProb)
+        nSoluciones, elite = aplicarOperadoresGeneticos(elite,poblacion,k,cProb,mProb)
         #Modelo generacional
         poblacion = []
         for solucion in nSoluciones:
