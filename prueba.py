@@ -1,3 +1,11 @@
+def linea_mas_larga(datos):
+    lmaslarga = datos[0]
+    for linea in datos:
+        if len(linea) > len(lmaslarga):
+            lmaslarga = linea
+    if len(lmaslarga)>=4:
+        return lmaslarga
+
 def main():
     elite=[]
     datos=[]
@@ -7,6 +15,9 @@ def main():
         for linea in lineas:
             datos.append(linea.split(sep=":"))
     print(datos[2])
+
+    grafo1=linea_mas_larga(datos)
+    print(grafo1)
 
     
 
