@@ -2,6 +2,37 @@ import random
 import math
 import re
 
+def evaluarNodos(grafo1, grafo2):
+    aux2=datos[1][::2]
+    aux=datos[2][::2]
+
+    print(aux)
+    print(aux2)
+
+
+    l=len(aux)
+    l2=len(aux2)
+    contador=0
+    for i in range(l):
+        for j in range(l2):
+            if aux[i]==aux2[j]:
+                contador=contador+1
+                break
+
+    if contador==l:
+        return true
+    else:
+        return false
+
+def crearGrafoRestriccion(grafo)
+    aux=[]
+    for i in range(len(grafo1)):
+        aux.append(i)
+        i=i+2
+    for i in range(len(grafo1)):
+        longitud += datos[solucion[i - 1]][solucion[i]]
+    return longitud
+
 def evaluarSolucion(datos, solucion):
     longitud = 0
     for i in range(len(solucion)):
@@ -144,7 +175,7 @@ def main():
         for linea in lineas:
             datos.append(re.split(r":| ",linea))
 
-    #aux=datos
+    aux=datos
     inicial=hillClimbing(datos)
     resultados=[]
     
