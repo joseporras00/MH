@@ -3,11 +3,8 @@ import math
 import re
 
 def evaluarNodos(grafo1, grafo2):
-    aux2=datos[1][::2]
-    aux=datos[2][::2]
-
-    print(aux)
-    print(aux2)
+    aux=grafo1[::2]
+    aux2=grafo2[::2]
 
 
     l=len(aux)
@@ -25,20 +22,32 @@ def evaluarNodos(grafo1, grafo2):
         return false
 
 def crearGrafoRestriccion(grafo)
-    aux=[]
-    for i in range(len(grafo1)):
-        aux.append(i)
-        i=i+2
-    for i in range(len(grafo1)):
-        longitud += datos[solucion[i - 1]][solucion[i]]
-    return longitud
+    grafoRest=grafo
+    l=list(range(len(grafoRest)))
+    aux=l[1::2]
+    for i in aux:
+        grafoRest[i]=[-99,99]
+    return grafoRest
 
-def evaluarSolucion(datos, solucion):
-    longitud = 0
-    for i in range(len(solucion)):
-        longitud += datos[solucion[i - 1]][solucion[i]]
-    return longitud
+def evaluarRestricciones(grafoRest, grafo):
+    l=list(range(len(grafoRest)))
+    aux=l[1::2]
+    l2=list(range(len(grafo)))
+    aux2=l2[1::2]
+    
+    ret=1
+    while ret!=0:
+        for i in aux2:
+            print(grafo[i+1])
+            for j in aux:
+                print(grafoRest[j+1][1])
+                if grafoRest[j]==grafo[i]:
+                    if grafo[i+1]>=grafoRest[j+1][0]:
+                        ret=0            
+                        break
 
+    return ret
+    
 def obtenerMejorVecino(solucion, datos):
     ##Obtención de los vecinos
     vecinos = []
