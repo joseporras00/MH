@@ -2,9 +2,37 @@ import random
 import math
 import re
 
-def evaluarNodos(grafo1, grafo2):
-    aux=grafo1[::2]
-    aux2=grafo2[::2]
+#No entiendo muy bien como lo hacen
+def contieneGrafo(grafo, registro):
+    found=false
+    currentReg=0
+
+    stack=[]
+    for i in range(len(grafo)):
+        if(grafo[i][0]==registro[currentReg][0]:
+           stack.append([0,i])
+
+    while stack and not found:
+        current=stack.pop()
+        currentReg=current[0]
+        currentNode=grafo[current[1]]
+
+        currentReg+=1
+        if(currentReg is len(registro)):
+            found=true
+        else:
+            dif=registro[currentReg][1] - registro[currentReg-1][1]
+            for i in range(len(grafo)):
+                if grafo[i][0] is registro[currentReg][0]:
+                    if diff in currentNode[1][i]:
+                        stack.append([currentReg,i])
+
+    return found
+        
+
+def evaluarNodos(registro1, registro2):
+    aux=registro1[::2]
+    aux2=registro22[::2]
 
 
     l=len(aux)
@@ -21,15 +49,15 @@ def evaluarNodos(grafo1, grafo2):
     else:
         return false
 
-def crearGrafoRestriccion(grafo)
-    grafoRest=grafo
-    l=list(range(len(grafoRest)))
+def crearGrafo(registro)
+    grafo=registro
+    l=list(range(len(grafo)))
     aux=l[1::2]
     for i in aux:
-        grafoRest[i]=[-99,99]
-    return grafoRest
+        grafo[i]=[-99,99]
+    return grafo
 
-def evaluarRestricciones(grafoRest, grafo):
+def evaluarRestricciones(grafoRest, registro):
     l=list(range(len(grafoRest)))
     aux=l[1::2]
     l2=list(range(len(grafo)))
@@ -48,133 +76,65 @@ def evaluarRestricciones(grafoRest, grafo):
 
     return ret
     
-def obtenerMejorVecino(solucion, datos):
+def obtenerVecinos(solucion, datos):
     ##Obtención de los vecinos
     vecinos = []
-    l=len(solucion)
+    l=len(datos)
     for i in range(l):
-        for j in range(i+1, l):
-            n = solucion.copy()
-            n[i] = solucion[j]
-            n[j] = solucion[i]
-            vecinos.append(n)
+        valido=evaluarNodos(solucion[0],datos[i])
+        if valido:
+            vecinos.append(datos[i])
 
     ##Obtención del mejor vecino
-    mejorVecino = vecinos[0]
-    mejorLongitud = evaluarSolucion(datos, mejorVecino)
-    for vecino in vecinos:
-        longitud = evaluarSolucion(datos, vecino)
-        if longitud < mejorLongitud:
-            mejorLongitud = longitud
-            mejorVecino = vecino
-    return mejorVecino, mejorLongitud
+    #mejorVecino = vecinos[0]
+    #mejorLongitud = evaluarSolucion(datos, mejorVecino)
+    #for vecino in vecinos:
+    #    longitud = evaluarSolucion(datos, vecino)
+    #    if longitud < mejorLongitud:
+    #       mejorLongitud = longitud
+    #        mejorVecino = vecino
+    return vecinos
 
 def hillClimbing(datos):
     l=len(datos)
     ##Creamos una solucion aleatoria
-    ciudades = list(range(l))
+    registros = list(range(l))
     solucion = []
+    #for i in range(l):
+    registro = registros[random.randint(0, len(ciudades) - 1)]
+    solucion.append(registro)
+        #ciudades.remove(ciudad)
+    grafo = crearGrafo(registro)
+
+    ##Obtenemos los vecinos 
+    vecinos = obtenerVecinos(solucion, datos)
+    lvec=len(vecinos)
+    for i in range(lvec):
+        grafo = mejorarGrafo(grafo,vecinos[i])
+
+    aciertos=0
     for i in range(l):
-        ciudad = ciudades[random.randint(0, len(ciudades) - 1)]
-        solucion.append(ciudad)
-        ciudades.remove(ciudad)
-    longitud = evaluarSolucion(datos, solucion)
+        valido=contieneGrafo(grafo,datos[i])
+        if valido:
+            aciertos+=1
 
-    ##Obtenemos el mejor vecino hasta que no haya vecinos mejores
-    vecino = obtenerMejorVecino(solucion, datos)
-    while vecino[1] < longitud:
-        solucion = vecino[0]
-        longitud = vecino[1]
-        vecino = obtenerMejorVecino(solucion, datos)
+    return grafo, aciertos
 
-    return solucion, longitud
-
-def iterated(datos):
-    l=len(datos)
-    minLong=99999999
-    ciudades=list(range(l))
-    solucion=[]
-    for i in range(l):
-        x=random.randint(0,len(ciudades) - 1)
-        ciudad=ciudades[x]
-        ciudades.remove(ciudad)
-    longitud=evaluarSolucion(datos,solucion)
-
-    vecino=obtenerMejorVecino(solucion,datos)
-    contador=1
-    while vecino[1] < longitud:
-        solucion=vecino[0]
-        longitud=vecino[1]
-        vecino=obtenerMejorVecino(solucion,datos)
-        contador=contador+1
-
-    while contador + 2< (len(datos)-1):
-        aux=contador
-        aux1=0
-        newSolucion=[]
-
-        for i in range(1):
-            if aux <(len(datos)-1):
-                newSolucion.append(solucion[aux])
-                aux=aux+1
-            else:
-                newSolucion.append(solucion[aux1])
-                aux1=aux1+1
-
-        auxLong=evaluarSolucion(datos,newSolucion)
-
-        if auxLong < minLong:
-            auxVecino=obtenerMejorVecino(newSolucion,datos)
-            contaodr=contaodr+2
-            while auxVecino[1]<auxLong:
-                newSolucion=auxVecino[0]
-                auxLong=auxVecino[1]
-                auxVecino=obtenerMejorVecino(newSolucion,datos)
-                contaodr=contador+1
-            minLong=auxLong
-
-    if minLong < longitud:
-        return newSolucion, auxLongitud
-    else:
-        return solucion, longitud
-
-
-def mejorado(datos):
-    iteraciones=20
-    result=[]
-    for i in range(1,10):
-        distancia=[]
-        bestDist=math.inf
-        worstDist=0
-        sumDist=0
-        for j in range(iteraciones):
-            s=iterated(datos)
-            distancia.append(s[1])
-            sumDist+=s[1]
-            if s[1] < bestDist:
-                bestDist=s[1]
-            elif s[1] > worstDist:
-                worstDist=s[1]
-
-        optimalOcurr=distances.count(bestDist)
-        results.append([i,bestDist,worstDist,sumDist/iteraciones,optimalOcurr/iteraciones])
-        for res in results:
-            print(",".join([str(s) for s in res]) + "\n")
 
 def ils(inicial, datos):
 
     iteraciones = 20
     minSol = inicial[0]
-    minLong = inicial[1]
+    maxAciertos = inicial[1]
 
     while iteraciones > 0:
 
         solucion = hillClimbing(datos)
-        if solucion[1] < minLong :
-            minSol = solucion[0]
-            minLong = solucion[1]
+        if solucion[1] > maxAciertos :
+            grafo = solucion[0]
+            aciertos = solucion[1]
         iteraciones = iteraciones - 1
-    return minSol, minLong
+    return grafo, aciertos
     
 def main():
 
@@ -190,21 +150,17 @@ def main():
     
     for i in range(0,10):
         print(i,"\n")
-        distancias=[]
-        minDist=math.inf
-        maxDist=0
-        suma=0
         for c in range(0,100):
             sol=ils(inicial,datos)
-            distancias.append(sol[1])
-            suma+=sol[1]
-            if(sol[1]<minDist):
-                minDist=sol[1]
-            if(sol[1]>maxDist):
-                maxDist=sol[1]
+            #resultados.append(sol)
+            #suma+=sol[1]
+            #if(sol[1]<minDist):
+            #    minDist=sol[1]
+            #if(sol[1]>maxDist):
+            #    maxDist=sol[1]
 
-        aciertos=distancias.count(minDist)
-        resultados.append([i,sol, aciertos])
+        #aciertos=distancias.count(minDist)
+        resultados.append([i,sol[0], sol[1]])
         i+=1
     with open("Grafos.csv", "w") as file:
         file.write(",".join(["N", "Grafo","Aciertos"]))
