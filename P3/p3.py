@@ -2,37 +2,11 @@ import random
 import math
 import re
 
-#No entiendo muy bien como lo hacen
-def contieneGrafo(grafo, registro):
-    found=false
-    currentReg=0
-
-    stack=[]
-    for i in range(len(grafo)):
-        if(grafo[i][0]==registro[currentReg][0]:
-           stack.append([0,i])
-
-    while stack and not found:
-        current=stack.pop()
-        currentReg=current[0]
-        currentNode=grafo[current[1]]
-
-        currentReg+=1
-        if(currentReg is len(registro)):
-            found=true
-        else:
-            dif=registro[currentReg][1] - registro[currentReg-1][1]
-            for i in range(len(grafo)):
-                if grafo[i][0] is registro[currentReg][0]:
-                    if diff in currentNode[1][i]:
-                        stack.append([currentReg,i])
-
-    return found
         
 
 def evaluarNodos(registro1, registro2):
     aux=registro1[::2]
-    aux2=registro22[::2]
+    aux2=registro2[::2]
 
 
     l=len(aux)
@@ -45,17 +19,21 @@ def evaluarNodos(registro1, registro2):
                 break
 
     if contador==l:
-        return true
+        return 1
     else:
-        return false
+        return 0
 
-def crearGrafo(registro)
+def crearGrafo(registro):
     grafo=registro
-    l=list(range(len(grafo)))
+    l=list(range(len(registro)))
     aux=l[1::2]
     for i in aux:
         grafo[i]=[-99,99]
     return grafo
+
+#def mejorarGrafo(grafo,registro):
+
+    
 
 def evaluarRestricciones(grafoRest, registro):
     l=list(range(len(grafoRest)))
@@ -101,7 +79,7 @@ def hillClimbing(datos):
     registros = list(range(l))
     solucion = []
     #for i in range(l):
-    registro = registros[random.randint(0, len(ciudades) - 1)]
+    registro = datos[random.randint(0, len(registros) - 1)]
     solucion.append(registro)
         #ciudades.remove(ciudad)
     grafo = crearGrafo(registro)
@@ -110,7 +88,7 @@ def hillClimbing(datos):
     vecinos = obtenerVecinos(solucion, datos)
     lvec=len(vecinos)
     for i in range(lvec):
-        grafo = mejorarGrafo(grafo,vecinos[i])
+        #grafo = mejorarGrafo(grafo,vecinos[i])
 
     aciertos=0
     for i in range(l):
